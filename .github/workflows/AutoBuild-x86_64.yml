@@ -75,7 +75,7 @@ env:
 # Cache 加速编译
   CACHE_ACCELERATE: true
 
-  SSH_ACTION: false
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
 ### 结束
 ### 请按需求修改以上内容
 
