@@ -76,6 +76,8 @@ env:
   CACHE_ACCELERATE: true
 
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  SSH_ACTION: ${{ github.event.inputs.SSH_ACTION }}
+
 ### 结束
 ### 请按需求修改以上内容
 
