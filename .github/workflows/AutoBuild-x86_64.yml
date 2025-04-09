@@ -54,6 +54,11 @@ on:
         description: '上传 bin 文件夹到 Artifacts'
         default: 'false'
         type: boolean
+      SSH_ACTION:
+        description: 'SSH远程配置固件'
+        required: false
+        default: 'false'
+        type: boolean
       ### 界面控制部分结束 ( 以上内容请保持不变 )
 
 ### 请按需求修改以下内容
@@ -66,9 +71,11 @@ env:
 # 删除无用文件以增加编译空间
   DELETE_USELESS_FILES: true
 # 删除早期的 workflow 任务
-  DELETE_OLD_WORKFLOW: false
+  DELETE_OLD_WORKFLOW: true
 # Cache 加速编译
-  CACHE_ACCELERATE: false
+  CACHE_ACCELERATE: true
+
+  SSH_ACTION: false
 ### 结束
 ### 请按需求修改以上内容
 
@@ -234,7 +241,10 @@ jobs:
         ./scripts/feeds install -a
         make defconfig
         make download -j8
-
+    - name: SSH远程连接（make menuconfig）
+      if: env.SSH_ACTION == 'true'
+      uses: danshui-git/debugger-action@main
+  
     - name: Build OpenWrt
       id: compile
       run: |
