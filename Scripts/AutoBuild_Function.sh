@@ -136,6 +136,7 @@ Firmware_Diy_Main() {
 	then
 		AddPackage other linaicode-1 AutoBuild-Packages main
 		# AddPackage other Hyy2001X AutoBuild-Packages master
+		sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
 		echo -e "\nCONFIG_PACKAGE_luci-app-autoupdate=y" >> ${CONFIG_FILE}
 		AutoUpdate_Version=$(awk -F '=' '/Version/{print $2}' $(PKG_Finder d package AutoBuild-Packages)/autoupdate/files/bin/autoupdate | awk 'NR==1')
 		cat >> $(PKG_Finder d package AutoBuild-Packages)/autoupdate/files/etc/autoupdate/default <<EOF
