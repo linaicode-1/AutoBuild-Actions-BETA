@@ -152,6 +152,7 @@ EOF
 				# AddPackage passwall2 xiaorouji openwrt-passwall2 main
 				AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 				rm -rf ${FEEDS_PKG}/net/{chinadns*,hysteria,geoview,trojan*,xray*,v2ray*,sing*}
+				rm -rf ${WORK}/package/passwall-depends/openwrt-passwall-packages/hysteria
 
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				AddPackage other WROIATE luci-app-socat main
@@ -217,12 +218,12 @@ EOF
 		Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
 		ReleaseDL https://api.github.com/repos/nxtrace/NTrace-core/releases/latest nexttrace_linux_amd64 ${BASE_FILES}/bin nexttrace
 
-		# hysteria_version="2.6.1"
+		hysteria_version="2.6.1"
 		wstunnel_version="9.2.3"
 		taierspeed_version="1.7.2"
 		
-		# wget --quiet --no-check-certificate -P /tmp \
-			# https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
+		wget --quiet --no-check-certificate -P /tmp \
+			https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
 			
 		wget --quiet --no-check-certificate -P /tmp \
 			https://github.com/erebe/wstunnel/releases/download/v${wstunnel_version}/wstunnel_${wstunnel_version}_linux_amd64.tar.gz
@@ -231,7 +232,7 @@ EOF
 
 		tar -xvzf /tmp/wstunnel_${wstunnel_version}_linux_amd64.tar.gz -C /tmp
 		Copy /tmp/wstunnel ${BASE_FILES}/usr/bin
-		# Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
+		Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
 		Copy /tmp/taierspeed-cli_${taierspeed_version}_linux_amd64 ${BASE_FILES}/usr/bin taierspeed
 		chmod +x ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/wstunnel ${BASE_FILES}/usr/bin/taierspeed
 
