@@ -150,7 +150,7 @@ EOF
 				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
 				# AddPackage passwall2 xiaorouji openwrt-passwall2 main
-				# AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
+				AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
 				# rm -rf ${FEEDS_PKG}/net/{chinadns*,hysteria,geoview,trojan*,xray*,v2ray*,sing*}
 
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
