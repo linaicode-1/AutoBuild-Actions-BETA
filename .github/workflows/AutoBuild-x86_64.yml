@@ -81,7 +81,7 @@ env:
 
 jobs:
   Compile:
-    runs-on: server
+    runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
