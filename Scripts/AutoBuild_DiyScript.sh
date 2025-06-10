@@ -108,6 +108,9 @@ EOF
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
+
+		AddPackage other asvow luci-app-tailscale main
+		
 		rm -r ${FEEDS_PKG}/mosdns
 		rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
@@ -150,6 +153,9 @@ EOF
 				AddPackage other WROIATE luci-app-socat main
     			#rm -r ${FEEDS_LUCI}/luci-app-socat
 				AddPackage other sbwml luci-app-mosdns v5
+
+				AddPackage other asvow luci-app-tailscale main
+
 				mosdns_version="5.3.3"
 				wget --quiet --no-check-certificate -P /tmp \
 					https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-amd64.zip
