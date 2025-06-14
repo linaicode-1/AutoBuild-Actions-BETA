@@ -234,7 +234,9 @@ jobs:
         ./scripts/feeds install -a
         make defconfig
         make download -j8
-
+    - name: Setup tmate session
+      uses: csexton/debugger-action@master
+      
     - name: Build OpenWrt
       id: compile
       run: |
