@@ -27,10 +27,10 @@ Firmware_Diy_Core() {
 	Default_Title="Powered by AutoBuild-Actions"
 	# 固件终端首页显示的额外信息
 	
-	Short_Fw_Date=false
+	Short_Fw_Date=true
 	# 简短的固件日期, true: [20210601]; false: [202106012359]
 	
-	x86_Full_Images=true
+	x86_Full_Images=false
 	# 额外上传已检测到的 x86 虚拟磁盘镜像, true: [上传]; false: [不上传]
 	
 	Fw_MFormat=AUTO
@@ -42,7 +42,7 @@ Firmware_Diy_Core() {
 	AutoBuild_Features=true
 	# 添加 AutoBuild 固件特性, true: [开启]; false: [关闭]
 	
-	AutoBuild_Features_Patch=true
+	AutoBuild_Features_Patch=false
 	AutoBuild_Features_Kconfig=false
 }
 
@@ -108,7 +108,6 @@ EOF
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-
 		rm -r ${FEEDS_PKG}/mosdns
 		rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
@@ -144,17 +143,15 @@ EOF
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
-				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
+				AddPackage other asvow luci-app-tailscale main
 
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				AddPackage other WROIATE luci-app-socat main
     			#rm -r ${FEEDS_LUCI}/luci-app-socat
 				AddPackage other sbwml luci-app-mosdns v5
-
-				AddPackage other asvow luci-app-tailscale main
-
 				mosdns_version="5.3.3"
 				wget --quiet --no-check-certificate -P /tmp \
 					https://github.com/IrineSistiana/mosdns/releases/download/v${mosdns_version}/mosdns-linux-amd64.zip
