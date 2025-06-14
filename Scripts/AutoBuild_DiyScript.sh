@@ -163,6 +163,8 @@ EOF
 				sed -i "s?+v2ray-geosite ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
 				
+				rm -rf ${FEEDS_PKG}/feeds/packages/net/tailscale
+				
 				Copy ${CustomFiles}/socat.Makefile ${FEEDS_PKG}/socat Makefile
 				rm -r ${FEEDS_PKG}/socat/files
 				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
