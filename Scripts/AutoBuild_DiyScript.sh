@@ -145,7 +145,7 @@ EOF
 			x86_64)
 				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
-				AddPackage other ZSKYC luci-app-tailscale main
+				# AddPackage other ZSKYC luci-app-tailscale main
 
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
@@ -166,8 +166,8 @@ EOF
 
 				Copy ${CustomFiles}/socat.Makefile ${FEEDS_PKG}/socat Makefile
 				rm -r ${FEEDS_PKG}/socat/files
-				rm -r ${FEEDS_PKG}/net/tailscale
-				
+				# rm -r ${FEEDS_PKG}/net/tailscale
+
 				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
