@@ -78,8 +78,8 @@ env:
 
 jobs:
   Compile:
-    runs-on: ubuntu-22.04
-    # runs-on: self-hosted
+    # runs-on: ubuntu-22.04
+    runs-on: self-hosted
 
     steps:
 
