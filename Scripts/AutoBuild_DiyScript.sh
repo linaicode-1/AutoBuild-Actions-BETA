@@ -74,6 +74,7 @@ Firmware_Diy() {
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
 	
+	
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
 		cat >> ${Version_File} <<EOF
@@ -143,9 +144,10 @@ EOF
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
+				echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
+				
 				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
-				AddPackage other asvow luci-app-tailscale main
 
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
@@ -162,8 +164,6 @@ EOF
 				sed -i "s?+v2ray-geoip ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 				sed -i "s?+v2ray-geosite ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-				
-				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 
 				Copy ${CustomFiles}/socat.Makefile ${FEEDS_PKG}/socat Makefile
 				rm -r ${FEEDS_PKG}/socat/files
@@ -172,6 +172,14 @@ EOF
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
+
+				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
+				AddPackage other asvow luci-app-tailscale main
+
+				ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
+				ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
+				curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh --no-sfe
+
 			;;
 			esac
 		;;
