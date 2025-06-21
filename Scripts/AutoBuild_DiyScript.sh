@@ -30,7 +30,7 @@ Firmware_Diy_Core() {
 	Short_Fw_Date=true
 	# 简短的固件日期, true: [20210601]; false: [202106012359]
 	
-	x86_Full_Images=false
+	x86_Full_Images=true
 	# 额外上传已检测到的 x86 虚拟磁盘镜像, true: [上传]; false: [不上传]
 	
 	Fw_MFormat=AUTO
@@ -42,8 +42,8 @@ Firmware_Diy_Core() {
 	AutoBuild_Features=true
 	# 添加 AutoBuild 固件特性, true: [开启]; false: [关闭]
 	
-	AutoBuild_Features_Patch=false
-	AutoBuild_Features_Kconfig=false
+	AutoBuild_Features_Patch=true
+	AutoBuild_Features_Kconfig=true
 }
 
 Firmware_Diy() {
@@ -97,20 +97,20 @@ EOF
 		# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
-		#sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
+		# sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
 		git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
 		
-		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage other vernesong OpenClash dev
+		# rm -r ${FEEDS_LUCI}/luci-theme-argon*
+		# AddPackage other vernesong OpenClash dev
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other sbwml luci-app-mosdns v5-lua
-		AddPackage themes jerrykuku luci-theme-argon 18.06
-		AddPackage themes thinktip luci-theme-neobird main
-		AddPackage msd_lite ximiTech luci-app-msd_lite main
-		AddPackage msd_lite ximiTech msd_lite main
-		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -r ${FEEDS_PKG}/mosdns
-		rm -r ${FEEDS_LUCI}/luci-app-mosdns
+		# AddPackage themes jerrykuku luci-theme-argon 18.06
+		# AddPackage themes thinktip luci-theme-neobird main
+		# AddPackage msd_lite ximiTech luci-app-msd_lite main
+		# AddPackage msd_lite ximiTech msd_lite main
+		# AddPackage iptvhelper riverscn openwrt-iptvhelper master
+		# rm -r ${FEEDS_PKG}/mosdns
+		# rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
 		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
