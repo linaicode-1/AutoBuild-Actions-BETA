@@ -115,28 +115,6 @@ EOF
 		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
-		case "${TARGET_BOARD}" in
-		ramips)
-			sed -i "/DEVICE_COMPAT_VERSION := 1.1/d" target/linux/ramips/image/mt7621.mk
-			Copy ${CustomFiles}/Depends/automount $(PKG_Finder d "package" automount)/files 15-automount
-		;;
-		esac
-
-		case "${CONFIG_FILE}" in
-		d-team_newifi-d2-Clash | xiaoyu_xy-c5-Clash)
-			ClashDL mipsle-hardfloat tun
-		;;
-		esac
-			
-		case "${TARGET_PROFILE}" in
-		d-team_newifi-d2)
-			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
-		;;
-		xiaomi_redmi-router-ax6s)
-			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
-			AddPackage passwall-luci xiaorouji openwrt-passwall main
-		;;
-		esac
 	;;
 	immortalwrt/immortalwrt*)
 		case "${TARGET_PROFILE}" in
