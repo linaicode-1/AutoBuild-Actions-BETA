@@ -23,6 +23,9 @@ Firmware_Diy_Core() {
 	
 	Default_IP="192.168.100.2"
 	# 固件 IP 地址
+
+	Disable_DHCP="1"
+	DNS_Settings="223.5.5.5 114.114.114.114"  
 	
 	Default_Title="Powered by AutoBuild-Actions"
 	# 固件终端首页显示的额外信息

@@ -214,7 +214,7 @@ EOF
 	elif [[ -n "${DNS_Settings}" ]]; then
 		ipa_dns="$(echo ${DNS_Settings} |grep -Eo "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
 		if [[ -n "${ipa_dns}" ]]; then
-			sed -i "$lan\set network.lan.dns='${DNS_Settings}'" "${GENE_PATH}"
+			sed -i "$lan\set network.lan.dns='${DNS_Settings}'" "${BASE_FILES}/bin/config_generate"
 			echo "DNS[${DNS_Settings}]设置完成"
 		else
 			TIME r "因DNS获取有错误，DNS设置失败，请检查DNS是否填写正确"
@@ -222,20 +222,19 @@ EOF
 	fi
 
 	if [[ "${Disable_DHCP}" == "1" ]]; then
-		sed -i "$lan\set dhcp.lan.ignore='1'" "${GENE_PATH}"
+		sed -i "$lan\set dhcp.lan.ignore='1'" "${BASE_FILES}/bin/config_generate"
 		echo "关闭DHCP设置完成"
 	else
 		echo "不进行,关闭DHCP设置"
 	fi
 
-	if [[ "${Cancel_running}" == "1" ]]; then
-		echo "sed -i '/coremark/d' /etc/crontabs/root" >> "${DEFAULT_PATH}"
-		echo "删除每天跑分任务完成"
-	else
-		echo "不进行,删除每天跑分任务"
-	fi
+	# if [[ "${Cancel_running}" == "1" ]]; then
+	# 	echo "sed -i '/coremark/d' /etc/crontabs/root" >> "${DEFAULT_PATH}"
+	# 	echo "删除每天跑分任务完成"
+	# else
+	# 	echo "不进行,删除每天跑分任务"
+	# fi
 
-    sed -i "$lan\set dhcp.lan.ignore='1'" ${BASE_FILES}/bin/config_generate
  	echo -e "### VARIABLE LIST ###\n$(cat ${GITHUB_ENV})\n"
 	ECHO "[Firmware_Diy_Main] Done"
 }
