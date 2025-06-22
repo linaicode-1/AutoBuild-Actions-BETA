@@ -194,21 +194,6 @@ EOF
 		;;
 		esac
 	fi
-	if [[ -n ${Tempoary_IP} ]]
-	then
-		ECHO "Using Tempoary IP Address: ${Tempoary_IP} ..."
-		Default_IP="${Tempoary_IP}"
-	fi
-	if [[ -n ${Default_IP} && ${Default_IP} =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]
-	then
-		Old_IP=$(awk -F '[="]+' '/ipaddr:-/{print $3}' ${BASE_FILES}/bin/config_generate | awk 'NR==1')
-		if [[ ! ${Default_IP} == ${Old_IP} ]]
-		then
-			ECHO "Setting default IP Address to ${Default_IP} ..."
-			sed -i "s/${Old_IP}/${Default_IP}/g" ${BASE_FILES}/bin/config_generate
-		fi
-	fi
-
 	if [[ "${DNS_Settings}" == "0" ]] || [[ -z "${DNS_Settings}" ]]; then
 		echo "不进行,DNS设置"
 	elif [[ -n "${DNS_Settings}" ]]; then
@@ -227,6 +212,22 @@ EOF
 	else
 		echo "不进行,关闭DHCP设置"
 	fi
+	if [[ -n ${Tempoary_IP} ]]
+	then
+		ECHO "Using Tempoary IP Address: ${Tempoary_IP} ..."
+		Default_IP="${Tempoary_IP}"
+	fi
+	if [[ -n ${Default_IP} && ${Default_IP} =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]
+	then
+		Old_IP=$(awk -F '[="]+' '/ipaddr:-/{print $3}' ${BASE_FILES}/bin/config_generate | awk 'NR==1')
+		if [[ ! ${Default_IP} == ${Old_IP} ]]
+		then
+			ECHO "Setting default IP Address to ${Default_IP} ..."
+			sed -i "s/${Old_IP}/${Default_IP}/g" ${BASE_FILES}/bin/config_generate
+		fi
+	fi
+
+	
 
 	# if [[ "${Cancel_running}" == "1" ]]; then
 	# 	echo "sed -i '/coremark/d' /etc/crontabs/root" >> "${DEFAULT_PATH}"
