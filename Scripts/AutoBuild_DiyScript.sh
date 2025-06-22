@@ -21,19 +21,16 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="192.168.100.2"
+	Default_IP="192.168.1.1"
 	# 固件 IP 地址
-
-	Disable_DHCP="1"
-	DNS_Settings="223.5.5.5 114.114.114.114"  
 	
 	Default_Title="Powered by AutoBuild-Actions"
 	# 固件终端首页显示的额外信息
 	
-	Short_Fw_Date=false
+	Short_Fw_Date=true
 	# 简短的固件日期, true: [20210601]; false: [202106012359]
 	
-	x86_Full_Images=true
+	x86_Full_Images=false
 	# 额外上传已检测到的 x86 虚拟磁盘镜像, true: [上传]; false: [不上传]
 	
 	Fw_MFormat=AUTO
@@ -45,8 +42,8 @@ Firmware_Diy_Core() {
 	AutoBuild_Features=true
 	# 添加 AutoBuild 固件特性, true: [开启]; false: [关闭]
 	
-	AutoBuild_Features_Patch=true
-	AutoBuild_Features_Kconfig=true
+	AutoBuild_Features_Patch=false
+	AutoBuild_Features_Kconfig=false
 }
 
 Firmware_Diy() {
@@ -77,47 +74,68 @@ Firmware_Diy() {
 	# Copy <cp_from> <cp_to > <rename>
 	# merge_package <git_branch> <git_repo_url> <package_path> <target_path>..
 	
-	
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
-# 		cat >> ${Version_File} <<EOF
-# sed -i '/check_signature/d' /etc/opkg.conf
-# if [ -z "\$(grep "REDIRECT --to-ports 53" /etc/firewall.user 2> /dev/null)" ]
-# then
-# 	echo '# iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-# 	echo '# iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-# 	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-# 	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p icmp --icmp-type destination-unreachable -j DROP' >> /etc/firewall.user
-# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
-# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
-# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
-# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p ipv6-icmp --icmpv6-type destination-unreachable -j DROP' >> /etc/firewall.user
-# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
-# fi
-# exit 0
-# EOF
-		# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+		cat >> ${Version_File} <<EOF
+sed -i '/check_signature/d' /etc/opkg.conf
+if [ -z "\$(grep "REDIRECT --to-ports 53" /etc/firewall.user 2> /dev/null)" ]
+then
+	echo '# iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+	echo '# iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+	echo 'iptables -t mangle -A PREROUTING -i pppoe -p icmp --icmp-type destination-unreachable -j DROP' >> /etc/firewall.user
+	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
+	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
+	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
+	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p ipv6-icmp --icmpv6-type destination-unreachable -j DROP' >> /etc/firewall.user
+	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
+fi
+exit 0
+EOF
+		sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
-		# sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
+		sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
+		sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
 		# git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
 		
-		# rm -r ${FEEDS_LUCI}/luci-theme-argon*
+		rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		# AddPackage other vernesong OpenClash dev
-		# AddPackage other jerrykuku luci-app-argon-config master
+		AddPackage other jerrykuku luci-app-argon-config master
 		# AddPackage other sbwml luci-app-mosdns v5-lua
-		# AddPackage themes jerrykuku luci-theme-argon 18.06
+		AddPackage themes jerrykuku luci-theme-argon 18.06
 		# AddPackage themes thinktip luci-theme-neobird main
 		# AddPackage msd_lite ximiTech luci-app-msd_lite main
 		# AddPackage msd_lite ximiTech msd_lite main
 		# AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		# rm -r ${FEEDS_PKG}/mosdns
-		# rm -r ${FEEDS_LUCI}/luci-app-mosdns
-		# rm -r ${FEEDS_PKG}/curl
-		# rm -r ${FEEDS_PKG}/msd_lite
-		# Copy ${CustomFiles}/curl ${FEEDS_PKG}
+		rm -r ${FEEDS_PKG}/mosdns
+		rm -r ${FEEDS_LUCI}/luci-app-mosdns
+		rm -r ${FEEDS_PKG}/curl
+		rm -r ${FEEDS_PKG}/msd_lite
+		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
+		case "${TARGET_BOARD}" in
+		ramips)
+			sed -i "/DEVICE_COMPAT_VERSION := 1.1/d" target/linux/ramips/image/mt7621.mk
+			Copy ${CustomFiles}/Depends/automount $(PKG_Finder d "package" automount)/files 15-automount
+		;;
+		esac
+
+		case "${CONFIG_FILE}" in
+		d-team_newifi-d2-Clash | xiaoyu_xy-c5-Clash)
+			ClashDL mipsle-hardfloat tun
+		;;
+		esac
+			
+		case "${TARGET_PROFILE}" in
+		d-team_newifi-d2)
+			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
+		;;
+		xiaomi_redmi-router-ax6s)
+			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
+			AddPackage passwall-luci xiaorouji openwrt-passwall main
+		;;
+		esac
 	;;
 	immortalwrt/immortalwrt*)
 		case "${TARGET_PROFILE}" in
@@ -125,11 +143,8 @@ Firmware_Diy() {
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
-				echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
-				
-				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 				AddPackage passwall xiaorouji openwrt-passwall main
-
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
 				AddPackage other WROIATE luci-app-socat main
@@ -145,22 +160,13 @@ Firmware_Diy() {
 				sed -i "s?+v2ray-geoip ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 				sed -i "s?+v2ray-geosite ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
 				rm -r ${WORK}/package/other/luci-app-mosdns/mosdns
-
+				
 				Copy ${CustomFiles}/socat.Makefile ${FEEDS_PKG}/socat Makefile
 				rm -r ${FEEDS_PKG}/socat/files
-
 				Copy ${CustomFiles}/speedtest ${BASE_FILES}/usr/bin
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
-
-				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
-				AddPackage other asvow luci-app-tailscale main
-
-				ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
-				ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
-				curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh --no-sfe
-
 			;;
 			esac
 		;;
