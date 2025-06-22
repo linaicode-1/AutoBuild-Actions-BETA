@@ -80,33 +80,33 @@ Firmware_Diy() {
 	
 	case "${OP_AUTHOR}/${OP_REPO}:${OP_BRANCH}" in
 	coolsnowwolf/lede:master)
-		cat >> ${Version_File} <<EOF
-sed -i '/check_signature/d' /etc/opkg.conf
-if [ -z "\$(grep "REDIRECT --to-ports 53" /etc/firewall.user 2> /dev/null)" ]
-then
-	echo '# iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-	echo '# iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-	echo 'iptables -t mangle -A PREROUTING -i pppoe -p icmp --icmp-type destination-unreachable -j DROP' >> /etc/firewall.user
-	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
-	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
-	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
-	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p ipv6-icmp --icmpv6-type destination-unreachable -j DROP' >> /etc/firewall.user
-	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
-fi
-exit 0
-EOF
+# 		cat >> ${Version_File} <<EOF
+# sed -i '/check_signature/d' /etc/opkg.conf
+# if [ -z "\$(grep "REDIRECT --to-ports 53" /etc/firewall.user 2> /dev/null)" ]
+# then
+# 	echo '# iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# 	echo '# iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# 	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# 	echo '# [ -n "\$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p icmp --icmp-type destination-unreachable -j DROP' >> /etc/firewall.user
+# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
+# 	echo 'iptables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
+# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags PSH,FIN PSH,FIN -j DROP' >> /etc/firewall.user
+# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p ipv6-icmp --icmpv6-type destination-unreachable -j DROP' >> /etc/firewall.user
+# 	echo '[ -n "\$(command -v ip6tables)" ] && ip6tables -t mangle -A PREROUTING -i pppoe -p tcp -m tcp --tcp-flags ACK,RST RST -j DROP' >> /etc/firewall.user
+# fi
+# exit 0
+# EOF
 		# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
 		# sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
-		git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
+		# git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
 		
 		# rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		# AddPackage other vernesong OpenClash dev
-		AddPackage other jerrykuku luci-app-argon-config master
-		AddPackage other sbwml luci-app-mosdns v5-lua
+		# AddPackage other jerrykuku luci-app-argon-config master
+		# AddPackage other sbwml luci-app-mosdns v5-lua
 		# AddPackage themes jerrykuku luci-theme-argon 18.06
 		# AddPackage themes thinktip luci-theme-neobird main
 		# AddPackage msd_lite ximiTech luci-app-msd_lite main
@@ -114,9 +114,9 @@ EOF
 		# AddPackage iptvhelper riverscn openwrt-iptvhelper master
 		# rm -r ${FEEDS_PKG}/mosdns
 		# rm -r ${FEEDS_LUCI}/luci-app-mosdns
-		rm -r ${FEEDS_PKG}/curl
-		rm -r ${FEEDS_PKG}/msd_lite
-		Copy ${CustomFiles}/curl ${FEEDS_PKG}
+		# rm -r ${FEEDS_PKG}/curl
+		# rm -r ${FEEDS_PKG}/msd_lite
+		# Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		
 	;;
 	immortalwrt/immortalwrt*)
