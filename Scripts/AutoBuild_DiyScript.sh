@@ -119,7 +119,7 @@ EOF
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
 		sed -i "s?+v2ray-geoip ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile	
 		sed -i "s?+v2ray-geosite ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
-		sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
+		# sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
 
 		case "${TARGET_BOARD}" in
 		ramips)
