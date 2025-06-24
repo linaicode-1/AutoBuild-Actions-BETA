@@ -96,14 +96,14 @@ EOF
 		sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 		# sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 		# sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon-mod"' $(PKG_Finder d package default-settings)/files/zzz-default-settings
-		# sed -i "s?openwrt-23.05?master?g" ${FEEDS_CONF}
+		sed -i "s?openwrt-123?master?g" ${FEEDS_CONF}
 		# git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
 		
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		# AddPackage other vernesong OpenClash dev
+		AddPackage other vernesong OpenClash dev
 		AddPackage other jerrykuku luci-app-argon-config master
-		# AddPackage other sbwml luci-app-mosdns v5-lua
-		AddPackage themes jerrykuku luci-theme-argon 18.06
+		AddPackage other sbwml luci-app-mosdns v5-lua
+		AddPackage themes jerrykuku luci-theme-argon master
 		# AddPackage themes thinktip luci-theme-neobird main
 		# AddPackage msd_lite ximiTech luci-app-msd_lite main
 		# AddPackage msd_lite ximiTech msd_lite main
@@ -118,22 +118,6 @@ EOF
 		ramips)
 			sed -i "/DEVICE_COMPAT_VERSION := 1.1/d" target/linux/ramips/image/mt7621.mk
 			Copy ${CustomFiles}/Depends/automount $(PKG_Finder d "package" automount)/files 15-automount
-		;;
-		esac
-
-		case "${CONFIG_FILE}" in
-		d-team_newifi-d2-Clash | xiaoyu_xy-c5-Clash)
-			ClashDL mipsle-hardfloat tun
-		;;
-		esac
-			
-		case "${TARGET_PROFILE}" in
-		d-team_newifi-d2)
-			Copy ${CustomFiles}/${TARGET_PROFILE}_system ${BASE_FILES}/etc/config system
-		;;
-		xiaomi_redmi-router-ax6s)
-			AddPackage passwall-depends xiaorouji openwrt-passwall-packages main
-			AddPackage passwall-luci xiaorouji openwrt-passwall main
 		;;
 		esac
 	;;
