@@ -104,16 +104,23 @@ EOF
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other sbwml luci-app-mosdns v5-lua
 		AddPackage themes jerrykuku luci-theme-argon master
+		AddPackage passwall xiaorouji openwrt-passwall main
+		AddPackage other asvow luci-app-tailscale main
+
 		# AddPackage themes thinktip luci-theme-neobird main
 		# AddPackage msd_lite ximiTech luci-app-msd_lite main
 		# AddPackage msd_lite ximiTech msd_lite main
 		# AddPackage iptvhelper riverscn openwrt-iptvhelper master
+		rm -r ${FEEDS_LUCI}/luci-app-passwall
 		rm -r ${FEEDS_PKG}/mosdns
 		rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
 		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
-		
+		sed -i "s?+v2ray-geoip ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile	
+		sed -i "s?+v2ray-geosite ??g" ${WORK}/package/other/luci-app-mosdns/luci-app-mosdns/Makefile
+		sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
+
 		case "${TARGET_BOARD}" in
 		ramips)
 			sed -i "/DEVICE_COMPAT_VERSION := 1.1/d" target/linux/ramips/image/mt7621.mk
