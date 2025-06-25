@@ -5,6 +5,7 @@
 Firmware_Diy_Start() {
 	ECHO "[Firmware_Diy_Start] Starting ..."
 	WORK="${GITHUB_WORKSPACE}/openwrt"
+	HOME_PATH="${GITHUB_WORKSPACE}/openwrt"
 	CONFIG_TEMP="${WORK}/.config"
 	CD ${WORK}
 	OP_REPO="$(basename $(cut -d ':' -f1 <<< ${DEFAULT_SOURCE}))"
