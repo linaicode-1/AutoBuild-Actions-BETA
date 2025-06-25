@@ -102,6 +102,7 @@ EOF
 		# 更新tailscale
 		rm -rf ${WORK}/feeds/packages/net/tailscale
 		AddSubPackage https://github.com/openwrt/packages/tree/master/net/tailscale ${WORK}/feeds/packages/net/tailscale
+		sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}feeds/packages/net/tailscale/Makefile
 
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other vernesong OpenClash dev
