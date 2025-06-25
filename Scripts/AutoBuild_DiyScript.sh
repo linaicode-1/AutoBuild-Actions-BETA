@@ -99,6 +99,9 @@ EOF
 		sed -i "s?openwrt-123?LEDE?g" ${FEEDS_CONF}
 		# git reset --hard 1627fd2c745e496134834a8fb8145ba0aa458ae9
 		
+		# 更新tailscale
+		gitsvn https://github.com/openwrt/packages/tree/master/net/tailscale ${FEEDS_PKG}/net/tailscale
+
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
 		AddPackage other vernesong OpenClash dev
 		AddPackage other jerrykuku luci-app-argon-config master
@@ -106,7 +109,7 @@ EOF
 		AddPackage themes jerrykuku luci-theme-argon master
 		AddPackage passwall xiaorouji openwrt-passwall main
 		AddPackage other asvow luci-app-tailscale main
-
+		AddPackage istore  linkease istore main
 		# AddPackage themes thinktip luci-theme-neobird main
 		# AddPackage msd_lite ximiTech luci-app-msd_lite main
 		# AddPackage msd_lite ximiTech msd_lite main
