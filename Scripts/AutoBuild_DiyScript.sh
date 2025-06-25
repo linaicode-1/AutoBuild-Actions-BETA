@@ -103,7 +103,7 @@ EOF
 		#  git clone https://github.com/openwrt/packages/tree/master/net/tailscale ${FEEDS_PKG}/net/tailscale
 
 		rm -r ${FEEDS_LUCI}/luci-theme-argon*
-		AddPackage ${FEEDS_PKG}/net/tailscale openwrt packages/tree/master/net/tailscale master
+		# AddPackage ${FEEDS_PKG}/net/tailscale openwrt packages/tree/master/net/tailscale master
 		AddPackage other vernesong OpenClash dev
 		AddPackage other jerrykuku luci-app-argon-config master
 		AddPackage other sbwml luci-app-mosdns v5-lua
