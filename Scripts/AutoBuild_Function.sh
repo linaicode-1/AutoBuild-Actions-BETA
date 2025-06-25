@@ -5,7 +5,6 @@
 Firmware_Diy_Start() {
 	ECHO "[Firmware_Diy_Start] Starting ..."
 	WORK="${GITHUB_WORKSPACE}/openwrt"
-	HOME_PATH="${GITHUB_WORKSPACE}/openwrt"
 	CONFIG_TEMP="${WORK}/.config"
 	CD ${WORK}
 	OP_REPO="$(basename $(cut -d ':' -f1 <<< ${DEFAULT_SOURCE}))"
@@ -577,15 +576,15 @@ AddSubPackage() {
 	fi
 
 	if [[ "$route" == "all" ]]; then
-		store_away="$HOME_PATH/"
+		store_away="$WORK/"
 	elif [[ "$route" == *"openwrt"* ]]; then
-		store_away="$HOME_PATH/${route#*openwrt/}"
+		store_away="$WORK/${route#*openwrt/}"
 	elif [[ "$route" == *"./"* ]]; then
-		store_away="$HOME_PATH/${route#*./}"
+		store_away="$WORK/${route#*./}"
 	elif [[ -n "$route" ]]; then
-		store_away="$HOME_PATH/$route"
+		store_away="$WORK/$route"
 	else
-		store_away="$HOME_PATH/$files_name"
+		store_away="$WORK/$files_name"
 	fi
 
 	if [[ "$url" == *"tree"* ]] && [[ -n "$path_after_branch" ]]; then
@@ -598,7 +597,7 @@ AddSubPackage() {
 			grep -rl 'include ../../lang/' . | xargs -r sed -i 's#include ../../lang/#include \$(TOPDIR)/feeds/packages/lang/#g'
 			if [[ "$route" == "all" ]]; then
 				find "$path_name" -mindepth 1 -printf '%P\n' | while read -r item; do
-				target="$HOME_PATH/${item}"
+				target="$WORK/${item}"
 				if [ -e "$target" ]; then
 					rm -rf "$target"
 				fi
@@ -608,7 +607,7 @@ AddSubPackage() {
 				rm -rf "$store_away" && cp -r "$path_name" "$store_away"
 			fi
 			[[ $? -eq 0 ]] && echo "$files_name文件下载完成" || { echo "$files_name文件下载失败"; exit 1; }
-			cd "$HOME_PATH"
+			cd "$WORK"
 		else
 			echo "$files_name文件下载失败"
 			exit 1
@@ -617,7 +616,7 @@ AddSubPackage() {
 		if git clone -q --single-branch --depth=1 --branch="$branch" "$base_url" "$tmpdir"; then
 			if [[ "$route" == "all" ]]; then
 				find "$path_name" -mindepth 1 -printf '%P\n' | while read -r item; do
-				target="$HOME_PATH/${item}"
+				target="$WORK/${item}"
 				if [ -e "$target" ]; then
 					rm -rf "$target"
 				fi
@@ -645,7 +644,7 @@ AddSubPackage() {
 		if git clone -q --depth 1 "$base_url" "$tmpdir"; then
 			if [[ "$route" == "all" ]]; then
 				find "$path_name" -mindepth 1 -printf '%P\n' | while read -r item; do
-				target="$HOME_PATH/${item}"
+				target="$WORK/${item}"
 				if [ -e "$target" ]; then
 					rm -rf "$target"
 				fi
