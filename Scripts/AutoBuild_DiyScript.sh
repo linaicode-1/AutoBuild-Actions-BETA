@@ -144,7 +144,9 @@ EOF
 			case "${CONFIG_FILE}" in
 			x86_64)
 				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
-				
+				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
+
+				AddPackage other vernesong OpenClash dev
 				AddPackage passwall xiaorouji openwrt-passwall main
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
@@ -169,7 +171,6 @@ EOF
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
 
-				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 			;;
 			esac
 		;;
