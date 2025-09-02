@@ -43,7 +43,7 @@ Firmware_Diy_Core() {
 	# 添加 AutoBuild 固件特性, true: [开启]; false: [关闭]
 	
 	AutoBuild_Features_Patch=false
-	AutoBuild_Features_Kconfig=false
+	AutoBuild_Features_Kconfig=true
 }
 
 Firmware_Diy() {
@@ -143,7 +143,8 @@ EOF
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
-				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				
 				AddPackage passwall xiaorouji openwrt-passwall main
 				# AddPackage passwall xiaorouji openwrt-passwall2 main
 				rm -r ${FEEDS_LUCI}/luci-app-passwall
@@ -167,6 +168,8 @@ EOF
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
+
+				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 			;;
 			esac
 		;;
@@ -215,6 +218,8 @@ EOF
 
 		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
 		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
+
+		
 	;;
 	esac
 }
