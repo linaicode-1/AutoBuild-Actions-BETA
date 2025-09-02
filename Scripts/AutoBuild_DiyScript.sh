@@ -143,8 +143,9 @@ EOF
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
-				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
-				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
+				sed -i "s?openwrt-24.10?master?g" ${FEEDS_CONF}
+
+				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 
 				AddPackage other vernesong OpenClash dev
 				AddPackage passwall xiaorouji openwrt-passwall main
@@ -220,7 +221,7 @@ EOF
 		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
 		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
 
-		
+		sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${FEEDS_PKG}/net/tailscale/Makefile
 	;;
 	esac
 }
