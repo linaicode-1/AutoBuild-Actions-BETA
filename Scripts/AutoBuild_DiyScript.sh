@@ -24,7 +24,7 @@ Firmware_Diy_Core() {
 	Default_IP="192.168.100.2"
 	# 固件 IP 地址
 	
-	Default_Title="Powered by AutoBuild-Actions"
+	Default_Title="Powered by Actions"
 	# 固件终端首页显示的额外信息
 	
 	Short_Fw_Date=false
@@ -43,7 +43,7 @@ Firmware_Diy_Core() {
 	# 添加 AutoBuild 固件特性, true: [开启]; false: [关闭]
 	
 	AutoBuild_Features_Patch=false
-	AutoBuild_Features_Kconfig=true
+	AutoBuild_Features_Kconfig=false
 }
 
 Firmware_Diy() {
@@ -143,9 +143,9 @@ EOF
 			sed -i -- 's:/bin/ash:'/bin/bash':g' ${BASE_FILES}/etc/passwd
 			case "${CONFIG_FILE}" in
 			x86_64)
-				sed -i "s?openwrt-24.10?master?g" ${FEEDS_CONF}
+				#sed -i "s?openwrt-24.10?master?g" ${FEEDS_CONF}
 
-				# sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
+				sed -i "s?/bin/login?/usr/libexec/login.sh?g" ${FEEDS_PKG}/ttyd/files/ttyd.config
 
 				AddPackage other vernesong OpenClash dev
 				AddPackage passwall xiaorouji openwrt-passwall main
@@ -171,7 +171,7 @@ EOF
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
-				#sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
+				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 
 			;;
 			esac
