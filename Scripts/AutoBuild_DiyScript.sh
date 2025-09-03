@@ -171,7 +171,7 @@ EOF
 				chmod +x ${BASE_FILES}/usr/bin/speedtest
 				
 				sed -i '/PKG_FIXUP/d' ${WORK}/feeds/packages/libs/libffi/Makefile
-				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
+				# sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 
 			;;
 			esac
