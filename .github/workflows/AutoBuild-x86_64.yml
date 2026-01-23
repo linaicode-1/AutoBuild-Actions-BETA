@@ -69,7 +69,7 @@ env:
 # 删除早期的 workflow 任务
   DELETE_OLD_WORKFLOW: false
 # Cache 加速编译
-  CACHE_ACCELERATE: false
+  CACHE_ACCELERATE: true
 ### 结束
 ### 请按需求修改以上内容
 
@@ -267,7 +267,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       if: env.UPLOAD_RELEASES == 'true' && steps.compile.outcome == 'success' && !cancelled()
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.REPO_TOKEN }}
         file: openwrt/bin/Firmware/*
         file_glob: true
         tag: AutoUpdate
@@ -282,7 +282,7 @@ jobs:
       if: env.UPLOAD_RELEASES == 'true' && steps.compile.outcome == 'success' && !cancelled()
       uses: svenstaro/upload-release-action@v2
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.REPO_TOKEN }}
         file: ./API
         file_glob: true
         tag: AutoUpdate
@@ -293,7 +293,7 @@ jobs:
       if: env.DELETE_OLD_WORKFLOW == 'true' && !cancelled()
       uses: Mattraks/delete-workflow-runs@v2
       with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_TOKEN }}
           repository: ${{ github.repository }}
           retain_days: 3
           keep_minimum_runs: 0
