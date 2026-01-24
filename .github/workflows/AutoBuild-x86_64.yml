@@ -55,6 +55,10 @@ on:
         description: '上传 bin 文件夹到 Artifacts'
         default: 'false'
         type: boolean
+      DEBUG:
+        description: '连接SSH'
+        default: 'false'
+        type: boolean
       ### 界面控制部分结束 ( 以上内容请保持不变 )
 
 ### 请按需求修改以下内容
@@ -234,7 +238,11 @@ jobs:
         ./scripts/feeds install -a
         make defconfig
         make download -j8
-
+    
+    - name: Setup tmate session
+      if: github.event.inputs.DEBUG == 'true'
+      uses: csexton/debugger-action@master
+      
     - name: Build OpenWrt
       id: compile
       run: |
