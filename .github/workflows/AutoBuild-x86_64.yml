@@ -244,13 +244,11 @@ jobs:
         cd openwrt
         ./scripts/feeds install -a
         make defconfig
-        make download -j8
+        make download -j$(nproc)
     
     - name: Setup tmate session
       if: github.event.inputs.DEBUG == 'true'
       uses: csexton/debugger-action@master
-      
-        make download -j$(nproc)
 
     - name: Build OpenWrt
       id: compile
