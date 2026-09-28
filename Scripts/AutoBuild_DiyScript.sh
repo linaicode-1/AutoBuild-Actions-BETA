@@ -170,8 +170,8 @@ EOF
 				rm -rf feeds/luci/applications/luci-app-daed
 				cp -a /tmp/packages/net/daed feeds/packages/net/daed
 				cp -a /tmp/luci/applications/luci-app-daed feeds/luci/applications/luci-app-daed
-				rm -r ${FEEDS_PKG}/mosdns
-				rm -r ${FEEDS_LUCI}/luci-app-mosdns
+				# rm -r ${FEEDS_PKG}/mosdns
+				# rm -r ${FEEDS_LUCI}/luci-app-mosdns
 				
 				#cd package/dae
 				#git checkout e7040afc92a3bff4b9e4fca381e7e14a7be1b75e
