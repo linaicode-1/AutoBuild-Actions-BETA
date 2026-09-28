@@ -150,7 +150,7 @@ EOF
 				AddPackage other jerrykuku luci-app-argon-config master
 				AddPackage qosmate hudra0 qosmate main
 				AddPackage qosmate hudra0 luci-app-qosmate main
-				AddPackage other sbwml luci-app-mosdns v5-lua
+				AddPackage other sbwml luci-app-mosdns v5
 				
 				AddPackage bandix timsaya luci-app-bandix main
 				AddPackage bandix timsaya openwrt-bandix main
