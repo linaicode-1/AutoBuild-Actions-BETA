@@ -148,7 +148,6 @@ EOF
 
 				AddPackage tailscale asvow luci-app-tailscale main
 				AddPackage other jerrykuku luci-app-argon-config master
-
 				AddPackage qosmate hudra0 qosmate main
 				AddPackage qosmate hudra0 luci-app-qosmate main
 				AddPackage other sbwml luci-app-mosdns v5-lua
@@ -163,6 +162,8 @@ EOF
 			    AddPackage passwall Openwrt-Passwall openwrt-passwall-packages main
 				
 				git clone https://github.com/immortalwrt/packages /tmp/packages
+				git clone https://github.com/EasyTier/luci-app-easytier.git package/luci-app-easytier
+
 				git clone https://github.com/immortalwrt/luci /tmp/luci
 				#git clone https://github.com/QiuSimons/luci-app-daed package/dae
 				rm -rf feeds/packages/net/daed
