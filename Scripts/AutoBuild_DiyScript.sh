@@ -21,7 +21,7 @@ Firmware_Diy_Core() {
 	Default_Flag=AUTO
 	# 固件标签 (名称后缀), 适用不同配置文件, AUTO: [自动识别]
 	
-	Default_IP="192.168.100.12"
+	Default_IP="192.168.100.2"
 	# 固件 IP 地址
 	
 	Default_Title="Powered by AutoBuild-Actions"
@@ -108,8 +108,8 @@ EOF
 		AddPackage msd_lite ximiTech luci-app-msd_lite main
 		AddPackage msd_lite ximiTech msd_lite main
 		AddPackage iptvhelper riverscn openwrt-iptvhelper master
-		rm -r ${FEEDS_PKG}/mosdns
-		rm -r ${FEEDS_LUCI}/luci-app-mosdns
+		# rm -r ${FEEDS_PKG}/mosdns
+		# rm -r ${FEEDS_LUCI}/luci-app-mosdns
 		rm -r ${FEEDS_PKG}/curl
 		rm -r ${FEEDS_PKG}/msd_lite
 		Copy ${CustomFiles}/curl ${FEEDS_PKG}
@@ -147,9 +147,11 @@ EOF
 				sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' ${WORK}/feeds/packages/net/tailscale/Makefile
 
 				AddPackage tailscale asvow luci-app-tailscale main
+				AddPackage other jerrykuku luci-app-argon-config master
 
 				AddPackage qosmate hudra0 qosmate main
 				AddPackage qosmate hudra0 luci-app-qosmate main
+				AddPackage other sbwml luci-app-mosdns v5-lua
 				
 				AddPackage bandix timsaya luci-app-bandix main
 				AddPackage bandix timsaya openwrt-bandix main
@@ -167,6 +169,9 @@ EOF
 				rm -rf feeds/luci/applications/luci-app-daed
 				cp -a /tmp/packages/net/daed feeds/packages/net/daed
 				cp -a /tmp/luci/applications/luci-app-daed feeds/luci/applications/luci-app-daed
+				rm -r ${FEEDS_PKG}/mosdns
+				rm -r ${FEEDS_LUCI}/luci-app-mosdns
+				
 				#cd package/dae
 				#git checkout e7040afc92a3bff4b9e4fca381e7e14a7be1b75e
 				#cd -
@@ -226,8 +231,8 @@ EOF
 		Copy ${CustomFiles}/Depends/cpuset ${BASE_FILES}/bin
 		ReleaseDL https://api.github.com/repos/nxtrace/NTrace-core/releases/latest nexttrace_linux_amd64 ${BASE_FILES}/bin nexttrace
 
-		hysteria_version="2.7.0"
-		wstunnel_version="9.2.3"
+		hysteria_version="2.12.3"
+		wstunnel_version="11.0.0"
 		wget --quiet --no-check-certificate -P /tmp \
 			https://github.com/apernet/hysteria/releases/download/app%2Fv${hysteria_version}/hysteria-linux-amd64
 		wget --quiet --no-check-certificate -P /tmp \
@@ -237,8 +242,8 @@ EOF
 		Copy /tmp/hysteria-linux-amd64 ${BASE_FILES}/usr/bin hysteria
 		chmod +x ${BASE_FILES}/usr/bin/hysteria ${BASE_FILES}/usr/bin/wstunnel
 
-		# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
-		# ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
+		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geosite.dat ${BASE_FILES}/usr/v2ray
+		ReleaseDL https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases/latest geoip.dat ${BASE_FILES}/usr/v2ray
 	;;
 	esac
 }
